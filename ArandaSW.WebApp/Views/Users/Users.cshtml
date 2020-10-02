@@ -1,0 +1,84 @@
+﻿@model IEnumerable<ArandaSW.WebApp.Models.a_user>
+
+@{
+    ViewBag.Title = "Users";
+}
+
+<h2>Users</h2>
+
+@if (Convert.ToInt32(TempData["rol"]) == 1)
+{
+    <p>
+        @Html.ActionLink("Crear Nuevo Usuario", "../CrearUsuario/Crear")
+    </p>
+}
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.fname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.usr_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.usr_password)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.email)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.fname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.lname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.usr_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.usr_password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.email)
+            </td>
+            <td>
+                @if (Convert.ToInt32(TempData["rol"]) == 1 || Convert.ToInt32(TempData["rol"]) == 2)
+                {
+                    @Html.ActionLink("Editar", "../EditarUsuario/Editar", new { id = item.id })
+                }
+                @if (Convert.ToInt32(TempData["rol"]) == 1)
+                {
+                    @Html.ActionLink("Eliminar", "../EliminarUsuario/Eliminar", new { id = item.id })
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div>
+    @Html.ActionLink("Volver", "../Home/Index")
+</div>

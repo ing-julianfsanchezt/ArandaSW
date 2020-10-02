@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ArandaDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="a_privilege">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="privilege_name" Type="varchar" MaxLength="50" />
+    <Property Name="section_fk" Type="int" />
+  </EntityType>
+  <EntityType Name="a_role">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="role_name" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="a_role_privileges">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="role_fk" Type="int" />
+    <Property Name="privilege_fk" Type="int" />
+  </EntityType>
+  <EntityType Name="a_section">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="section_name" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="a_user">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="fname" Type="varchar" MaxLength="50" />
+    <Property Name="lname" Type="varchar" MaxLength="50" />
+    <Property Name="usr_name" Type="varchar" MaxLength="50" />
+    <Property Name="usr_password" Type="varchar" MaxLength="50" />
+    <Property Name="address" Type="varchar" MaxLength="50" />
+    <Property Name="phone" Type="varchar" MaxLength="10" />
+    <Property Name="email" Type="varchar" MaxLength="50" />
+    <Property Name="role_fk" Type="int" />
+  </EntityType>
+  <Association Name="privilege_fk">
+    <End Role="a_privilege" Type="Self.a_privilege" Multiplicity="0..1" />
+    <End Role="a_role_privileges" Type="Self.a_role_privileges" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="a_privilege">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="a_role_privileges">
+        <PropertyRef Name="privilege_fk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="role_fk">
+    <End Role="a_role" Type="Self.a_role" Multiplicity="0..1" />
+    <End Role="a_user" Type="Self.a_user" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="a_role">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="a_user">
+        <PropertyRef Name="role_fk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="roles_fk">
+    <End Role="a_role" Type="Self.a_role" Multiplicity="0..1" />
+    <End Role="a_role_privileges" Type="Self.a_role_privileges" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="a_role">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="a_role_privileges">
+        <PropertyRef Name="role_fk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="section_fk">
+    <End Role="a_section" Type="Self.a_section" Multiplicity="0..1" />
+    <End Role="a_privilege" Type="Self.a_privilege" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="a_section">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="a_privilege">
+        <PropertyRef Name="section_fk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ArandaDBModelStoreContainer">
+    <EntitySet Name="a_privilege" EntityType="Self.a_privilege" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="a_role" EntityType="Self.a_role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="a_role_privileges" EntityType="Self.a_role_privileges" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="a_section" EntityType="Self.a_section" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="a_user" EntityType="Self.a_user" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="privilege_fk" Association="Self.privilege_fk">
+      <End Role="a_privilege" EntitySet="a_privilege" />
+      <End Role="a_role_privileges" EntitySet="a_role_privileges" />
+    </AssociationSet>
+    <AssociationSet Name="role_fk" Association="Self.role_fk">
+      <End Role="a_role" EntitySet="a_role" />
+      <End Role="a_user" EntitySet="a_user" />
+    </AssociationSet>
+    <AssociationSet Name="roles_fk" Association="Self.roles_fk">
+      <End Role="a_role" EntitySet="a_role" />
+      <End Role="a_role_privileges" EntitySet="a_role_privileges" />
+    </AssociationSet>
+    <AssociationSet Name="section_fk" Association="Self.section_fk">
+      <End Role="a_section" EntitySet="a_section" />
+      <End Role="a_privilege" EntitySet="a_privilege" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

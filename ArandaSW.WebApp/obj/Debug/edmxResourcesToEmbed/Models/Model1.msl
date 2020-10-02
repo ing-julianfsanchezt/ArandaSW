@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ArandaDBModelStoreContainer" CdmEntityContainer="ArandaDBEntities">
+    <EntitySetMapping Name="a_privilege">
+      <EntityTypeMapping TypeName="ArandaDBModel.a_privilege">
+        <MappingFragment StoreEntitySet="a_privilege">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="privilege_name" ColumnName="privilege_name" />
+          <ScalarProperty Name="section_fk" ColumnName="section_fk" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="a_role">
+      <EntityTypeMapping TypeName="ArandaDBModel.a_role">
+        <MappingFragment StoreEntitySet="a_role">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="role_name" ColumnName="role_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="a_role_privileges">
+      <EntityTypeMapping TypeName="ArandaDBModel.a_role_privileges">
+        <MappingFragment StoreEntitySet="a_role_privileges">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="role_fk" ColumnName="role_fk" />
+          <ScalarProperty Name="privilege_fk" ColumnName="privilege_fk" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="a_section">
+      <EntityTypeMapping TypeName="ArandaDBModel.a_section">
+        <MappingFragment StoreEntitySet="a_section">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="section_name" ColumnName="section_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="a_user">
+      <EntityTypeMapping TypeName="ArandaDBModel.a_user">
+        <MappingFragment StoreEntitySet="a_user">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="fname" ColumnName="fname" />
+          <ScalarProperty Name="lname" ColumnName="lname" />
+          <ScalarProperty Name="usr_name" ColumnName="usr_name" />
+          <ScalarProperty Name="usr_password" ColumnName="usr_password" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="role_fk" ColumnName="role_fk" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

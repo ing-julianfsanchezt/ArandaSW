@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<div class="row">
+    <div class="col-md-4">
+        <h1>Hola!!! Bienvenido</h1>
+    </div>
+
+    @if (Convert.ToInt32(TempData["rol"]) != 1)
+    {
+        <div class="col-md-4 pt-2">
+
+            <p>Respaldados por una trayectoria de más de 18 años ofrecemos soluciones disruptivas para la gestión de servicios que facilitan a las empresas su incremento en la productividad, a través de software que cumple con los más altos estándares de calidad.</p>
+
+        </div>
+    }
+
+    <div class="col-md-4 pt-2">
+        <p>@TempData["nombre"] &nbsp; @TempData["apellido"]</p>
+        <p>@TempData["direccion"]</p>
+        <p>@TempData["email"]</p>
+    </div>
+
+</div>
+<div class="row">
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+
+            @if (Convert.ToInt32(TempData["rol"]) == 1 || Convert.ToInt32(TempData["rol"]) == 2 || Convert.ToInt32(TempData["rol"]) == 3)
+            {
+                <li>@Html.ActionLink("Gestionar Usuarios", "Users", "Users")</li>
+}
+
+        </ul>
+    </div>
+</div>

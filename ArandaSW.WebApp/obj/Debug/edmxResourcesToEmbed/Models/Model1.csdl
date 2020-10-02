@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ArandaDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="a_privilege">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="privilege_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="section_fk" Type="Int32" />
+    <NavigationProperty Name="a_role_privileges" Relationship="Self.privilege_fk" FromRole="a_privilege" ToRole="a_role_privileges" />
+    <NavigationProperty Name="a_section" Relationship="Self.section_fk" FromRole="a_privilege" ToRole="a_section" />
+  </EntityType>
+  <EntityType Name="a_role">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="role_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="a_user" Relationship="Self.role_fk" FromRole="a_role" ToRole="a_user" />
+    <NavigationProperty Name="a_role_privileges" Relationship="Self.roles_fk" FromRole="a_role" ToRole="a_role_privileges" />
+  </EntityType>
+  <EntityType Name="a_role_privileges">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="role_fk" Type="Int32" />
+    <Property Name="privilege_fk" Type="Int32" />
+    <NavigationProperty Name="a_privilege" Relationship="Self.privilege_fk" FromRole="a_role_privileges" ToRole="a_privilege" />
+    <NavigationProperty Name="a_role" Relationship="Self.roles_fk" FromRole="a_role_privileges" ToRole="a_role" />
+  </EntityType>
+  <EntityType Name="a_section">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="section_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="a_privilege" Relationship="Self.section_fk" FromRole="a_section" ToRole="a_privilege" />
+  </EntityType>
+  <EntityType Name="a_user">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="lname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="usr_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="usr_password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="phone" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="role_fk" Type="Int32" />
+    <NavigationProperty Name="a_role" Relationship="Self.role_fk" FromRole="a_user" ToRole="a_role" />
+  </EntityType>
+  <Association Name="privilege_fk">
+    <End Role="a_privilege" Type="Self.a_privilege" Multiplicity="0..1" />
+    <End Role="a_role_privileges" Type="Self.a_role_privileges" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="a_privilege">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="a_role_privileges">
+        <PropertyRef Name="privilege_fk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="section_fk">
+    <End Role="a_section" Type="Self.a_section" Multiplicity="0..1" />
+    <End Role="a_privilege" Type="Self.a_privilege" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="a_section">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="a_privilege">
+        <PropertyRef Name="section_fk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="role_fk">
+    <End Role="a_role" Type="Self.a_role" Multiplicity="0..1" />
+    <End Role="a_user" Type="Self.a_user" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="a_role">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="a_user">
+        <PropertyRef Name="role_fk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="roles_fk">
+    <End Role="a_role" Type="Self.a_role" Multiplicity="0..1" />
+    <End Role="a_role_privileges" Type="Self.a_role_privileges" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="a_role">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="a_role_privileges">
+        <PropertyRef Name="role_fk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ArandaDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="a_privilege" EntityType="Self.a_privilege" />
+    <EntitySet Name="a_role" EntityType="Self.a_role" />
+    <EntitySet Name="a_role_privileges" EntityType="Self.a_role_privileges" />
+    <EntitySet Name="a_section" EntityType="Self.a_section" />
+    <EntitySet Name="a_user" EntityType="Self.a_user" />
+    <AssociationSet Name="privilege_fk" Association="Self.privilege_fk">
+      <End Role="a_privilege" EntitySet="a_privilege" />
+      <End Role="a_role_privileges" EntitySet="a_role_privileges" />
+    </AssociationSet>
+    <AssociationSet Name="section_fk" Association="Self.section_fk">
+      <End Role="a_section" EntitySet="a_section" />
+      <End Role="a_privilege" EntitySet="a_privilege" />
+    </AssociationSet>
+    <AssociationSet Name="role_fk" Association="Self.role_fk">
+      <End Role="a_role" EntitySet="a_role" />
+      <End Role="a_user" EntitySet="a_user" />
+    </AssociationSet>
+    <AssociationSet Name="roles_fk" Association="Self.roles_fk">
+      <End Role="a_role" EntitySet="a_role" />
+      <End Role="a_role_privileges" EntitySet="a_role_privileges" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
